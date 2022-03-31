@@ -1,0 +1,30 @@
+import { lazy } from "react";
+import { Redirect } from "react-router";
+
+const routes = [
+  {
+    path: "/",
+    exact: true,
+    render: () => {
+      return <Redirect to="/home"></Redirect>;
+    },
+  },
+  {
+    path: "/home",
+    component: lazy(() => import("../pages/home")),
+  },
+  {
+    path: "/text",
+    component: lazy(() => import("../pages/text")),
+  },
+  {
+    path: "/archives",
+    component: lazy(() => import("../pages/archives")),
+  },
+  {
+    path: "/messageBoard",
+    component: lazy(() => import("../pages/messageBoard")),
+  },
+];
+
+export default routes;
