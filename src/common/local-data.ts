@@ -16,6 +16,10 @@ export const headerLinks = [
     title: "留言板",
     link: "/messageBoard",
   },
+  {
+    title: "聊天",
+    link: "/chat",
+  },
 ];
 
 export const educationList = [
@@ -47,4 +51,10 @@ export const companyList = [
   { id: "002d", value: "重庆xx公司" },
   { id: "003d", value: "北京xx公司" },
   { id: "004d", value: "上海xx公司" },
+];
+
+// 聊天用户数据
+export const chatUser = [
+  { id: "NQJF97stN", name: "张三", avatar: "../src/logo.svg" },
+  { id: "OPBjWcPQg", name: "李四", avatar: "../src/favicon.svg" },
 ];

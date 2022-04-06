@@ -38,3 +38,13 @@ export declare type messageType = {
   time: string;
   agree: number;
 };
+
+// 聊天
+export declare type chatType = {
+  id: string;
+  userId: string;
+  userName: string;
+  userAvatar: string;
+  text: string;
+  time: string | number;
+};
