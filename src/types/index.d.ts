@@ -39,6 +39,7 @@ export declare type messageType = {
   agree: number;
 };
 
+export declare type LastType = number | "";
 // 聊天
 export declare type chatType = {
   id: string;
@@ -46,5 +47,6 @@ export declare type chatType = {
   userName: string;
   userAvatar: string;
   text: string;
-  time: string | number;
+  time: number;
+  lastTime: LastType;
 };

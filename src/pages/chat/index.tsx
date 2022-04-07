@@ -1,27 +1,29 @@
-import { memo, useState } from "react";
+import { memo, useState, useRef } from "react";
 import UserList from "./components/userList";
 import Dialogue from "./components/dialogue";
 import InputIndex from "./components/inputIndex";
 import { ChatData } from "./chatCss";
 import { chatStore } from "../../redux";
 import { chatType } from "../../types";
+import { ADD } from "../../common/constant";
 
 export default memo(function Chat() {
   const [useId, useIdState] = useState("");
-  const [chat, chatState] = useState<chatType[]>([
-    {
-      id: "ieLJQt9vm",
-      text: "12121",
-      time: 1649238559344,
-      userAvatar: "../src/logo.svg",
-      userId: "NQJF97stN",
-      userName: "张三",
-    },
-  ]);
+  const [chat, chatState] = useState<chatType[]>(chatStore.getState());
+  const dialogueData = useRef<HTMLDivElement | null>(null);
   //获取输入框的数据
   const sendData = (e: chatType) => {
-    console.log("打印对话数据", e);
-    chatState([...chat, e]);
+    if (chat.length) {
+      let time = chat[chat.length - 1].time;
+      if (Number(e.time) - Number(time) > 5 * 60 * 1000) e.lastTime = time;
+    }
+    chatStore.dispatch({ type: ADD, data: e });
+    chatState(chatStore.getState());
+    setTimeout(() => {
+      let child = document.getElementsByClassName("dialogue-list")[0];
+      if (dialogueData.current)
+        dialogueData.current.scrollTop = child.clientHeight;
+    }, 400);
   };
   return (
     <ChatData>
@@ -29,7 +31,14 @@ export default memo(function Chat() {
       <div className="chat-box">
         <UserList id={useId} idClick={(id: string) => useIdState(id)} />
         <div className="chat-right">
-          <Dialogue id={useId} chat={chat}></Dialogue>
+          <div
+            className="chat-dialogue"
+            ref={(el) => (dialogueData.current = el)}
+          >
+            <div className="dialogue-list">
+              <Dialogue id={useId} chat={chat}></Dialogue>
+            </div>
+          </div>
           <InputIndex id={useId} sendData={sendData}></InputIndex>
         </div>
       </div>

@@ -13,12 +13,42 @@ export const ChatData = styled.div`
     height: 600px;
     border: 1px solid #d3d3d3;
     border-radius: 5px;
-    overflow: hidden;
+    .dialogue-time {
+      text-align: center;
+      span {
+        background: #dadada;
+        color: #fff;
+        border-radius: 2px;
+        padding: 0 5px;
+        font-size: 14px;
+      }
+    }
     .chat-right {
       width: 80%;
       height: 100%;
       float: right;
       background: #f5f5f5;
+      .chat-dialogue {
+        height: 60%;
+        overflow-x: hidden;
+        overflow-y: scroll;
+        /* 设置滚动条的样式 */
+        ::-webkit-scrollbar {
+          width: 3px;
+          height: 3px;
+        }
+
+        /* 滚动槽 */
+        ::-webkit-scrollbar-track {
+          border-radius: 10px;
+        }
+
+        /* 滚动条滑块 */
+        ::-webkit-scrollbar-thumb {
+          border-radius: 10px;
+          background: rgba(0, 0, 0, 0.1);
+        }
+      }
     }
   }
 `;
@@ -48,16 +78,59 @@ export const ChatList = styled.div`
 // 对话框
 export const DialogueBox = styled.div`
   width: 100%;
-  height: 60%;
-  overflow-x: hidden;
-  overflow-y: scroll;
-  ::-webkit-scrollbar {
-    width: 3px;
-    height: 3px;
-  }
-  .chat-item {
+
+  .dialogue-item {
     padding: 5px;
-    display: flex;
+    .dialogue-user {
+      margin-top: 10px;
+    }
+    .dialogue-data {
+      padding: 0 10px;
+    }
+    .dialogue-name {
+      color: #b2b2b2;
+      font-size: 14px;
+    }
+
+    .dialogue-content {
+      padding: 5px 10px;
+      border-radius: 4px;
+      max-width: 500px;
+      position: relative;
+      white-space: pre-wrap;
+      &:before {
+        content: "";
+        position: absolute;
+      }
+    }
+    .dialogue-right {
+      display: flex;
+      justify-content: flex-end;
+      .dialogue-name {
+        text-align: right;
+      }
+      .dialogue-content {
+        background: #95ec69;
+        &:before {
+          border-top: 7px solid transparent !important;
+          border-bottom: 7px solid transparent !important;
+          border-left: 7px solid #95ec69 !important;
+          right: -6px !important;
+        }
+      }
+    }
+    .dialogue-left {
+      display: flex;
+      .dialogue-content {
+        background: #fff;
+        &:before {
+          border-top: 7px solid transparent !important;
+          border-bottom: 7px solid transparent !important;
+          border-right: 7px solid #fff !important;
+          left: -6px !important;
+        }
+      }
+    }
   }
 `;
 
