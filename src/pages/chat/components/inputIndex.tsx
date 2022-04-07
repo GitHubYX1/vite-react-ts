@@ -18,10 +18,9 @@ export default memo(function InputIndex(props: inputType) {
     if (!props.id) {
       return message.info("请选择账号！");
     }
-    if (!discuss || !discuss.replace(/\s+/g, "")) {
+    if (!discuss) {
       return message.info("请输入信息！");
     }
-    console.log("打印输入文本", discuss.replace(/\s+/g, ""));
     let user = chatUser.find((item) => item.id == props.id);
     props.sendData({
       id: shortId.generate(),
@@ -41,7 +40,12 @@ export default memo(function InputIndex(props: inputType) {
         value={discuss}
         style={{ height: 180 }}
         bordered={false}
-        onChange={(e) => discussState(e.target.value)}
+        onChange={(e) => {
+          if (e.target.value != "\n") discussState(e.target.value);
+        }}
+        onPressEnter={(e) => {
+          if (!e.shiftKey) sendClick();
+        }}
       />
       <div className="input-send">
         <Button onClick={sendClick}>发送</Button>
