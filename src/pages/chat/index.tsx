@@ -29,7 +29,11 @@ export default memo(function Chat() {
     <ChatData>
       <h2>仿微信页面通讯</h2>
       <div className="chat-box">
-        <UserList id={useId} idClick={(id: string) => useIdState(id)} />
+        <UserList
+          id={useId}
+          chat={chat}
+          idClick={(id: string) => useIdState(id)}
+        />
         <div className="chat-right">
           <div
             className="chat-dialogue"

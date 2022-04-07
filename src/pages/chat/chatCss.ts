@@ -58,7 +58,7 @@ export const ChatList = styled.div`
   width: 20%;
   border-right: 1px solid #d3d3d3;
   float: left;
-  background: #e9e7e6;
+  background: #e6e5e5;
   .user-item {
     padding: 10px 20px;
     box-sizing: border-box;
@@ -66,9 +66,17 @@ export const ChatList = styled.div`
     &:hover {
       background: #dedbdb;
     }
-    .user-text {
+    .user-data {
       padding-left: 10px;
       width: calc(100% - 40px);
+      .user-text {
+        width: 100%;
+        color: #999999;
+        font-size: 12px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
     }
   }
   .user-select {
