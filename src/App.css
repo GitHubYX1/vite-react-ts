@@ -314,3 +314,17 @@ textarea {
   width: 1200px;
   margin: auto;
 }
+
+/* 隐藏搜索框 */
+.emoji-mart-search {
+  display: none;
+}
+
+.emoji-mart-emoji span {
+  cursor: pointer !important;
+}
+
+/* 隐藏预览遮罩 */
+.ant-image-mask {
+  opacity: 0 !important;
+}

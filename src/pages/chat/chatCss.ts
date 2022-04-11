@@ -13,6 +13,7 @@ export const ChatData = styled.div`
     height: 600px;
     border: 1px solid #d3d3d3;
     border-radius: 5px;
+    background: #f5f5f5;
     .dialogue-time {
       text-align: center;
       span {
@@ -109,6 +110,14 @@ export const DialogueBox = styled.div`
       &:before {
         content: "";
         position: absolute;
+      }
+      .dialogue-img {
+        max-width: 400px;
+        margin-top: 5px;
+        margin-bottom: 10px;
+        &:last-child {
+          margin-bottom: 5px;
+        }
       }
     }
     .dialogue-right {

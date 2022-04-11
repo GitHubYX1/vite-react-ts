@@ -49,4 +49,5 @@ export declare type chatType = {
   text: string;
   time: number;
   lastTime: LastType;
+  imageUrl?: string[];
 };

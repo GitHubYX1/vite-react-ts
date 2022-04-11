@@ -1,7 +1,7 @@
-import { memo, useRef, useEffect } from "react";
+import { memo } from "react";
 import { DialogueBox } from "../chatCss";
 import { chatType } from "../../../types";
-import { Avatar } from "antd";
+import { Avatar, Image } from "antd";
 
 interface dialogueType {
   id: string;
@@ -9,6 +9,26 @@ interface dialogueType {
 }
 
 export default memo(function Dialogue(props: dialogueType) {
+  // 内容数据
+  const DialogueData = (data: chatType) => {
+    return (
+      <div className="dialogue-data">
+        <div className="dialogue-name">{data.userName}</div>
+        <div className="dialogue-content">
+          {!data.imageUrl?.length
+            ? data.text
+            : data.imageUrl.map((url, index) => {
+                return (
+                  <div className="dialogue-img" key={index}>
+                    <Image src={url} />
+                  </div>
+                );
+              })}
+        </div>
+      </div>
+    );
+  };
+  // 计算时间戳
   const offTime = (value: number) => {
     var date = new Date(value);
     var Y = date.getFullYear() + "-";
@@ -31,6 +51,7 @@ export default memo(function Dialogue(props: dialogueType) {
       return Y + M + D;
     }
   };
+
   return (
     <DialogueBox>
       {props.chat.map((item) => (
@@ -42,13 +63,9 @@ export default memo(function Dialogue(props: dialogueType) {
           ) : (
             ""
           )}
-
           {item.userId == props.id ? (
             <div className="dialogue-right">
-              <div className="dialogue-data">
-                <div className="dialogue-name">{item.userName}</div>
-                <div className="dialogue-content">{item.text}</div>
-              </div>
+              <DialogueData {...item}></DialogueData>
               <div className="dialogue-user">
                 <Avatar src={item.userAvatar} size={40}></Avatar>
               </div>
@@ -58,10 +75,7 @@ export default memo(function Dialogue(props: dialogueType) {
               <div className="dialogue-user">
                 <Avatar src={item.userAvatar} size={40}></Avatar>
               </div>
-              <div className="dialogue-data">
-                <div className="dialogue-name">{item.userName}</div>
-                <div className="dialogue-content">{item.text}</div>
-              </div>
+              <DialogueData {...item}></DialogueData>
             </div>
           )}
         </div>
