@@ -1,5 +1,40 @@
 @import 'antd/dist/antd.css';
 
+/* 引入NotoColorEmoji.ttf展示字体表情 */
+@font-face {
+  font-family: "NotoColorEmoji";
+  src: url("./assets/ttf/NotoColorEmoji.ttf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+hr,
+p,
+dl,
+dt,
+dd,
+ul,
+ol,
+li,
+pre,
+fieldset,
+button,
+input,
+textarea,
+th,
+td,
+a {
+  font-family: Arial, "Microsoft YaHei", "NotoColorEmoji" !important;
+
+}
+
 .App {
   text-align: center;
 }

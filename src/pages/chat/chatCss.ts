@@ -3,7 +3,6 @@ import styled from "styled-components";
 export const ChatData = styled.div`
   width: 1200px;
   margin: 0 auto;
-
   h2 {
     font-weight: 700;
     margin: 30px 0;
@@ -19,8 +18,8 @@ export const ChatData = styled.div`
       span {
         background: #dadada;
         color: #fff;
-        border-radius: 2px;
-        padding: 0 5px;
+        border-radius: 4px;
+        padding: 4px 5px;
         font-size: 14px;
       }
     }

@@ -49,6 +49,7 @@ export default memo(function Emoji(props: { onEmoji: Function }) {
             i18n={i18n}
             showPreview={false}
             showSkinTones={false}
+            set="google"
             autoFocus
             enableFrequentEmojiSort
           />
