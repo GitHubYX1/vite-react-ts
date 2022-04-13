@@ -1,14 +1,16 @@
-import { memo, useState } from "react";
+import { memo, useState, useRef } from "react";
 import { SmileOutlined } from "@ant-design/icons";
 import { EmojiData } from "./emojiCss";
-import { Popover } from "antd";
 import "emoji-mart/css/emoji-mart.css";
 import { Picker } from "emoji-mart";
 
 export default memo(function Emoji(props: { onEmoji: Function }) {
+  const [visible, visibleState] = useState(false);
+  const [cartoon, cartoonState] = useState(false);
+  const myRef = useRef<HTMLDivElement>(null);
   const i18n = {
     search: "搜索",
-    clear: "清除", // Accessible label on "clear" button
+    clear: "清除",
     notfound: "未找到表情符号",
     skintext: "选择默认肤色",
     categories: {
@@ -25,7 +27,7 @@ export default memo(function Emoji(props: { onEmoji: Function }) {
       flags: "旗帜",
       custom: "习惯",
     },
-    categorieslabel: "表情符号类别", // Accessible title for the list of categories
+    categorieslabel: "表情符号类别",
     skintones: {
       1: "默认肤色",
       2: "浅肤色",
@@ -37,28 +39,55 @@ export default memo(function Emoji(props: { onEmoji: Function }) {
   };
   const onEmojiClick = (emoji: any) => {
     props.onEmoji(emoji.native);
+    visibleState(!visible);
+  };
+  const handleClick = (br: boolean) => {
+    if (br) {
+      // 添加全局点击事件
+      document.addEventListener("click", handleOutsideClick, false);
+    } else {
+      document.removeEventListener("click", handleOutsideClick, false);
+    }
+    // 判断是否开启关闭动画
+    if (!br) {
+      cartoonState(true);
+      setTimeout(() => {
+        visibleState(false);
+        cartoonState(false);
+      }, 500);
+    } else {
+      visibleState(true);
+    }
+  };
+  // 判断是否点击了myRef.current的区域
+  const handleOutsideClick = (e: any) => {
+    console.log(e);
+    if (!myRef.current?.contains(e.target)) handleClick(false);
   };
   return (
-    <EmojiData>
-      <Popover
-        placement="top"
-        trigger="click"
-        content={
-          <Picker
-            onSelect={onEmojiClick}
-            i18n={i18n}
-            showPreview={false}
-            showSkinTones={false}
-            set="google"
-            autoFocus
-            enableFrequentEmojiSort
-          />
-        }
+    <EmojiData ref={myRef}>
+      <div
+        className={"emoji-picker " + (!cartoon ? "entry" : "quit")}
+        style={{ display: visible ? "block" : "none" }}
       >
-        <span className="emoji-icon">
-          <SmileOutlined />
-        </span>
-      </Popover>
+        <Picker
+          onSelect={onEmojiClick}
+          i18n={i18n}
+          showPreview={false}
+          showSkinTones={false}
+          set="google"
+          autoFocus
+          enableFrequentEmojiSort
+        />
+      </div>
+      <span
+        className="emoji-icon"
+        onClick={() => {
+          handleClick(!visible);
+        }}
+      >
+        <SmileOutlined />
+      </span>
     </EmojiData>
   );
 });
