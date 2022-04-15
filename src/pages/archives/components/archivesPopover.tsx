@@ -10,6 +10,7 @@ export default memo(function ArchivesPopover(props: { tags: archiverType }) {
     <Popover
       placement="bottomLeft"
       trigger="click"
+      arrowPointAtCenter
       onVisibleChange={(br) => {
         undergoStateState(br);
       }}
