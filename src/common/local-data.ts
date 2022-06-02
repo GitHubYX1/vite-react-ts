@@ -20,6 +20,10 @@ export const headerLinks = [
     title: "聊天",
     link: "/chat",
   },
+  {
+    title: "测评进度",
+    link: "/topicStep",
+  },
 ];
 
 export const educationList = [

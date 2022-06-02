@@ -9,11 +9,17 @@
   },
   "dependencies": {
     "@types/emoji-mart": "^3.0.9",
+    "@types/file-saver": "^2.0.5",
+    "@types/pizzip": "^3.0.2",
     "@types/react-redux": "^7.1.23",
     "@types/shortid": "0.0.29",
     "antd": "^4.19.3",
+    "docxtemplater": "^3.29.5",
     "emoji-mart": "^3.0.1",
+    "file-saver": "^2.0.5",
+    "jszip-utils": "^0.1.0",
     "npm": "^5.0.0",
+    "pizzip": "^3.1.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-file-reader": "^1.1.4",
@@ -21,7 +27,8 @@
     "react-router-config": "^5.1.1",
     "react-router-dom": "^5.0.0",
     "shortid": "^2.2.16",
-    "styled-components": "^5.3.3"
+    "styled-components": "^5.3.3",
+    "xlsx": "^0.17.0"
   },
   "devDependencies": {
     "@types/react": "^17.0.33",

@@ -51,3 +51,47 @@ export declare type chatType = {
   lastTime: LastType;
   imageUrl?: string[];
 };
+
+/** 问题进度 **/
+
+/**
+ * 选项答案
+ * @param content 选项名称
+ * @param count 计数
+ * @param ratio 占比
+ */
+export declare type answerType = {
+  content: string;
+  count: number;
+  ratio: string;
+};
+
+/**
+ * 填空题答案
+ * @param id id
+ * @param content 填空数据
+ * @param time 时间
+ */
+export declare type fillAnswerType = {
+  id: number;
+  content: string;
+  time: string;
+};
+
+/**
+ * 题目数据
+ * @param questionContent 题目
+ * @param id id
+ * @param type 状态
+ * @param answer 选项答案
+ * @param assessCount 总计
+ * @param fillAnswer 填空数据
+ */
+export declare type questionType = {
+  questionContent: string;
+  id: number;
+  type: string;
+  answer: answerType[];
+  assessCount: number;
+  fillAnswer?: fillAnswerType[];
+};

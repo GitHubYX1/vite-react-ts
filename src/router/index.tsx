@@ -29,6 +29,10 @@ const routes = [
     path: "/chat",
     component: lazy(() => import("../pages/chat")),
   },
+  {
+    path: "/topicStep",
+    component: lazy(() => import("../pages/topicStep")),
+  },
 ];
 
 export default routes;
