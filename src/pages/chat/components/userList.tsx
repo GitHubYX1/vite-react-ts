@@ -14,7 +14,8 @@ export default memo(function UserList(props: userType) {
   const userTextInfo = (id: string) => {
     let info = props.chat.filter((item) => item.userId == id);
     if (info.length) {
-      return info[info.length - 1].text;
+      let endData = info[info.length - 1]
+      return endData.imageUrl?.length ? '[图片]' : endData.text;
     }
     return "";
   };
