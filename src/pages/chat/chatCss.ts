@@ -90,7 +90,7 @@ export const DialogueBox = styled.div`
   .dialogue-item {
     padding: 5px;
     .dialogue-user {
-      margin-top: 10px;
+      margin-top: 15px;
     }
     .dialogue-data {
       padding: 0 10px;
