@@ -40,8 +40,15 @@ a {
 }
 
 .App-logo {
-  height: 40vmin;
+  height: 20vmin;
   pointer-events: none;
+}
+
+.home-box{
+  width: 1000px;
+  padding: 20px;
+  border: 1px solid  #dcdfe6;
+  border-radius: 5px;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -51,14 +58,12 @@ a {
 }
 
 .App-header {
-  background-color: #282c34;
   min-height: 92vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: white;
 }
 
 .App-link {
