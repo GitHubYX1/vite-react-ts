@@ -5,10 +5,11 @@ export const EmojiData = styled.div`
   .emoji-picker {
     position: absolute;
     bottom: 40px;
-    left: -162px;
-    padding: 12px 16px;
-    background: #fff;
+    left: -146px;
     border-radius: 5px;
+    box-shadow: 0px 0cap 16px 4px rgba(0,0,0,0.43);
+    -webkit-box-shadow: 0px 0px 16px 4px rgba(0,0,0,0.43);
+    -moz-box-shadow: 0px 0px 16px 4px rgba(0,0,0,0.43);
     &:before {
       content: "";
       position: absolute;
@@ -19,6 +20,11 @@ export const EmojiData = styled.div`
       bottom: -16px !important;
       left: 50%;
       transform: translate(-50%, 0);
+    }
+    .emoji-mart{
+      display:block;
+      border:0;
+      overflow: hidden;
     }
   }
   .entry {

@@ -25,6 +25,13 @@ export const Publish = styled.div`
       color: #808080;
     }
   }
+  .publish-operate{
+    display: flex;
+    align-items: center;
+    .icon{
+      padding:0 20px;
+    }
+  }
 `;
 
 export const Content = styled.div`

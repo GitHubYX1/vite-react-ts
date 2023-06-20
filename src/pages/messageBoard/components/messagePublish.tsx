@@ -2,6 +2,7 @@ import { memo, useState } from "react";
 import { Input, Button, message } from "antd";
 import { Publish } from "../messageCss";
 import shortId from "shortid";
+import Emoji from "../../../components/emoji";
 
 const { TextArea } = Input;
 
@@ -55,9 +56,12 @@ export default memo(function messagePublish(props: {
           onChange={(e) => saveQuery(e.target.value, "comments")}
         />
       </div>
-      <Button type="primary" onClick={release}>
-        发布
-      </Button>
+      <div className="publish-operate">
+        <Emoji onEmoji={(e: string) => { saveQuery(discuss.comments + e, "comments") }}></Emoji>
+        <Button type="primary" onClick={release}>
+          发布
+        </Button>
+      </div>
     </Publish>
   );
 });

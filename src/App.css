@@ -368,3 +368,13 @@ textarea {
 .ant-image-mask {
   opacity: 0 !important;
 }
+
+.icon {
+  font-size: 20px;
+  color: #777777;
+  cursor: pointer;
+}
+
+.icon:hover {
+  color: #4e4e4e;
+}
