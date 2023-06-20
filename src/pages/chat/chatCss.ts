@@ -159,4 +159,15 @@ export const InputBox = styled.div`
     padding: 10px;
     text-align: right;
   }
+  .list-icon {
+    .icon {
+      padding-left: 20px;
+      font-size: 20px;
+      color: #777777;
+      cursor: pointer;
+      &:hover {
+        color: #4e4e4e;
+      }
+    }
+  }
 `;

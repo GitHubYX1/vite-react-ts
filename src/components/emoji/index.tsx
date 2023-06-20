@@ -1,4 +1,5 @@
 import { memo, useState, useRef } from "react";
+import { Tooltip } from 'antd';
 import { SmileOutlined } from "@ant-design/icons";
 import { EmojiData } from "./emojiCss";
 import "emoji-mart/css/emoji-mart.css";
@@ -65,7 +66,7 @@ export default memo(function Emoji(props: { onEmoji: Function }) {
     if (!myRef.current?.contains(e.target)) handleClick(false);
   };
   return (
-    <EmojiData ref={myRef}>
+    <EmojiData ref={myRef} className="icon">
       <div
         className={"emoji-picker " + (!cartoon ? "entry" : "quit")}
         style={{ display: visible ? "block" : "none" }}
@@ -80,14 +81,7 @@ export default memo(function Emoji(props: { onEmoji: Function }) {
           enableFrequentEmojiSort
         />
       </div>
-      <span
-        className="emoji-icon"
-        onClick={() => {
-          handleClick(!visible);
-        }}
-      >
-        <SmileOutlined />
-      </span>
+      <Tooltip placement="bottom" title="表情"><SmileOutlined onClick={() => { handleClick(!visible); }} /></Tooltip>
     </EmojiData>
   );
 });

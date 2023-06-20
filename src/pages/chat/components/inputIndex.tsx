@@ -5,6 +5,7 @@ import { chatUser } from "../../../common/local-data";
 import shortId from "shortid";
 import Emoji from "../../../components/emoji";
 import UploadImg from "../../../components/uploadImg";
+import ChatHistory from "../../../components/chatHistory";
 
 const { TextArea } = Input;
 
@@ -47,13 +48,14 @@ export default memo(function InputIndex(props: inputType) {
   };
   return (
     <InputBox>
-      <div className="flex">
+      <div className="flex list-icon">
         <Emoji
           onEmoji={(e: string) => {
             discussState(discuss + e);
           }}
         ></Emoji>
         <UploadImg multipleFiles base64={onBase64}></UploadImg>
+        <ChatHistory></ChatHistory>
       </div>
       <TextArea
         placeholder="请输入信息"

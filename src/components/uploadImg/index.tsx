@@ -1,6 +1,6 @@
+import { Tooltip } from 'antd';
 import ReactFileReader from "react-file-reader";
 import { PictureOutlined } from "@ant-design/icons";
-import { UploadBox } from "./uploadCss";
 
 interface uploadType {
   multipleFiles: Boolean;
@@ -9,7 +9,7 @@ interface uploadType {
 
 export default function UploadImg(props: uploadType) {
   return (
-    <UploadBox>
+    <div className="icon">
       <ReactFileReader
         fileTypes={[".png", ".jpg", ".gif", ".jpeg"]}
         base64={true}
@@ -18,11 +18,9 @@ export default function UploadImg(props: uploadType) {
           props.base64(e.base64);
         }}
       >
-        <span className="upload-icon">
-          <PictureOutlined />
-        </span>
+        <Tooltip placement="bottom" title="发送图片"><PictureOutlined /></Tooltip>
       </ReactFileReader>
-    </UploadBox>
+    </div>
   );
 }
 

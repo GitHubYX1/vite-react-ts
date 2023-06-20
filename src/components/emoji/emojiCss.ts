@@ -1,20 +1,11 @@
 import styled from "styled-components";
 
 export const EmojiData = styled.div`
-  padding: 0 10px;
   position: relative;
-  .emoji-icon {
-    font-size: 20px;
-    color: #777777;
-    cursor: pointer;
-    &:hover {
-      color: #4e4e4e;
-    }
-  }
   .emoji-picker {
     position: absolute;
     bottom: 40px;
-    left: -170px;
+    left: -162px;
     padding: 12px 16px;
     background: #fff;
     border-radius: 5px;
