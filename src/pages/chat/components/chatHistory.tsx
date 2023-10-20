@@ -1,11 +1,12 @@
 import { memo, useState } from "react";
 import { Modal, Avatar, Image, Empty, Input, Tooltip } from 'antd';
 import { MessageOutlined, SearchOutlined } from "@ant-design/icons";
-import { chatStore } from "../../redux";
-import { chatType } from "../../types";
-import { HistoryList } from "./historyCss"
+import { chatStore } from "../../../redux";
+import { chatType } from "../../../types";
+import { offTime } from "../../../utils";
+import { HistoryList } from "../chatCss"
 
-export default memo(function loading() {
+export default memo(function ChatHistory() {
   let [modalOpen, modalOpenState] = useState(false);
   let [chat, chatState] = useState<chatType[]>(chatStore.getState());
   let [search, searchState] = useState('')
@@ -38,32 +39,9 @@ export default memo(function loading() {
     chatState([])
     modalOpenState(false);
   };
-  // 计算时间戳
-  const offTime = (value: number) => {
-    var date = new Date(value);
-    var Y = date.getFullYear() + "-";
-    var M =
-      (date.getMonth() + 1 < 10
-        ? "0" + (date.getMonth() + 1)
-        : date.getMonth() + 1) + "-";
-    var D = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
-    var h =
-      (date.getHours() < 10 ? "0" + date.getHours() : date.getHours()) + ":";
-    var m =
-      date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
-    let dt = new Date();
-    let current = dt.getFullYear() + "-" + dt.getMonth() + "-" + dt.getDate();
-    let system =
-      date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate();
-    if (current == system) {
-      return h + m;
-    } else {
-      return Y + M + D;
-    }
-  };
   return (
     <div className="icon">
-      <Tooltip placement="bottom" title="对话记录"><MessageOutlined onClick={showModal} /></Tooltip>
+      <Tooltip placement="bottom" title="对话记录" zIndex={1}><MessageOutlined onClick={showModal} /></Tooltip>
       <Modal title="对话记录" width={600} visible={modalOpen} onOk={handleCancel} onCancel={handleCancel} footer={''}>
         <Input prefix={<SearchOutlined twoToneColor="#b2b2b2" />} placeholder="搜索" value={search}
           onChange={(e) => { searchState(e.target.value) }} onPressEnter={searchClick}></Input>

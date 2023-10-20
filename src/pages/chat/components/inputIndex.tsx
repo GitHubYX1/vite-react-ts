@@ -5,7 +5,7 @@ import { chatUser } from "../../../common/local-data";
 import shortId from "shortid";
 import Emoji from "../../../components/emoji";
 import UploadImg from "../../../components/uploadImg";
-import ChatHistory from "../../../components/chatHistory";
+import ChatHistory from "./chatHistory";
 
 const { TextArea } = Input;
 
