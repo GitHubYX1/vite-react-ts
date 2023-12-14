@@ -8,14 +8,15 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@types/emoji-mart": "^3.0.9",
+    "@emoji-mart/data": "^1.1.2",
+    "@emoji-mart/react": "^1.1.1",
     "@types/file-saver": "^2.0.5",
     "@types/pizzip": "^3.0.2",
     "@types/react-redux": "^7.1.23",
     "@types/shortid": "0.0.29",
     "antd": "^4.19.3",
     "docxtemplater": "^3.29.5",
-    "emoji-mart": "^3.0.1",
+    "emoji-mart": "^5.5.2",
     "file-saver": "^2.0.5",
     "jszip-utils": "^0.1.0",
     "pizzip": "^3.1.1",

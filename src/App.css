@@ -2,7 +2,7 @@
 
 /* 引入NotoColorEmoji.ttf展示字体表情 */
 @font-face {
-  font-family: "NotoColorEmoji";
+  font-family: "EmojiMart";
   src: url("./assets/ttf/NotoColorEmoji.ttf") format("opentype");
   font-weight: normal;
   font-style: normal;
@@ -31,8 +31,7 @@ textarea,
 th,
 td,
 a {
-  font-family: Arial, "Microsoft YaHei", "NotoColorEmoji" !important;
-
+  font-family: Arial, "Microsoft YaHei", "EmojiMart" !important;
 }
 
 .App {
