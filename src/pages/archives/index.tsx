@@ -15,7 +15,7 @@ interface keepType {
 }
 
 export default memo(function Archives() {
-  let rowData: archiverType = {
+  const rowData: archiverType = {
     address: "",
     birthday: "",
     department: "",
@@ -30,37 +30,25 @@ export default memo(function Archives() {
     sex: "",
     undergo: [],
   };
-  let [data, dataList] = useState<archiverType[]>(store.getState()); //展示数据
-  let [ListRow, setListRow] = useState(rowData); //档案数据
-  let [loading, loadingState] = useState(false); //加载
-  let [dialogVisible, setDialogVisible] = useState(false); //打开档案
+  const [data, dataList] = useState<archiverType[]>(store.getState()); //展示数据
+  const [ListRow, setListRow] = useState(rowData); //档案数据
+  const [loading, loadingState] = useState(false); //加载
+  const [dialogVisible, setDialogVisible] = useState(false); //打开档案
   // 点击查询
   const inquiryClick = (e: { reset: boolean; dataQuery: inquiryType }) => {
     loadingState(true);
-    let keyword = e.dataQuery.keyword;
-    let education = e.dataQuery.education;
-    let department = e.dataQuery.department;
-    let position = e.dataQuery.position;
-    let obj: archiverType[] = [];
-    if (e.reset) {
-      obj = store.getState();
-    } else {
-      obj = store
-        .getState()
-        .filter(
-          (item) =>
-            (item.number.indexOf(keyword) !== -1 ||
-              item.name.indexOf(keyword) !== -1 ||
-              item.idCard.indexOf(keyword) !== -1 ||
-              item.address.indexOf(keyword) !== -1) &&
-            (education ? item.education === education : true) &&
-            (department ? item.department === department : true) &&
-            (position ? item.position === position : true)
-        );
-    }
-
+    const { reset, dataQuery } = e;
+    const filteredData = reset ? store.getState() : store.getState().filter(
+      (item: any) =>
+        ['number', 'name', 'idCard', 'address'].some((key: string) =>
+          item[key].includes(dataQuery.keyword)
+        ) &&
+        (!dataQuery.education || item.education === dataQuery.education) &&
+        (!dataQuery.department  || item.department === dataQuery.department ) &&
+        (!dataQuery.position || item.position === dataQuery.position )
+    )
     setTimeout(() => {
-      dataList(obj);
+      dataList(filteredData);
       loadingState(false);
     }, 1000);
   };
