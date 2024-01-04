@@ -1,0 +1,38 @@
+.game {
+    display: flex;
+    flex-direction: row;
+    padding: 60px;
+    justify-content: center;
+}
+.status {
+    margin-bottom: 10px;
+}
+
+.board-row:after {
+    clear: both;
+    content: '';
+    display: table;
+}
+
+.square {
+    background: #fff;
+    border: 1px solid #999;
+    float: left;
+    font-size: 30px;
+    font-weight: bold;
+    line-height: 50px;
+    height: 50px;
+    margin-right: -1px;
+    margin-top: -1px;
+    padding: 0;
+    text-align: center;
+    width: 50px;
+    cursor: pointer;
+}
+
+.game-info{
+    text-align: center;
+}
+.game-info li{
+    margin-bottom: 5px;
+}

@@ -33,6 +33,10 @@ const routes = [
     path: "/topicStep",
     component: lazy(() => import("../pages/topicStep")),
   },
+  {
+    path: "/ticTacToe",
+    component: lazy(() => import("../pages/ticTacToe")),
+  },
 ];
 
 export default routes;

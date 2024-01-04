@@ -24,6 +24,10 @@ export const headerLinks = [
     title: "测评进度",
     link: "/topicStep",
   },
+  {
+    title: "井字棋",
+    link: "/ticTacToe",
+  },
 ];
 
 export const educationList = [
