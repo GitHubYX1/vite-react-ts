@@ -3,9 +3,9 @@ import { Button } from "antd";
 import "./game.css";
 
 //按钮
-function Square({ value, handleClick }: { value: string; handleClick: () => void }) {
+function Square({ value, color, handleClick }: { value: string; color: string; handleClick: () => void }) {
   return (
-    <button className="square" onClick={handleClick}>
+    <button className="square" style={{ backgroundColor: color }} onClick={handleClick}>
       {value}
     </button>
   );
@@ -23,18 +23,21 @@ function calculateWinner(squares: string[]) {
     [2, 4, 6],
   ];
   let winner = "";
+  let line: number[] = [];
   for (let i = 0; i < lines.length; i++) {
     const [a, b, c] = lines[i];
     if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
       winner = squares[a];
+      line = lines[i];
     }
   }
-  return winner;
+  return { winner, line };
 }
 
 //矩阵
 function Board({ xIsNext, squares, onPlay }: { xIsNext: boolean; squares: string[]; onPlay: (squares: string[]) => void }) {
-  const winner = calculateWinner(squares);
+  const { winner, line } = calculateWinner(squares);
+
   const handleClick = (i: number) => {
     if (squares[i] || winner) return;
     const nextSquares = squares.slice();
@@ -58,19 +61,19 @@ function Board({ xIsNext, squares, onPlay }: { xIsNext: boolean; squares: string
     <>
       <div className="status">{status()}</div>
       <div className="board-row">
-        <Square value={squares[0]} handleClick={() => { handleClick(0) }} />
-        <Square value={squares[1]} handleClick={() => { handleClick(1) }} />
-        <Square value={squares[2]} handleClick={() => { handleClick(2) }} />
+        <Square value={squares[0]} color={line.indexOf(0) === -1 ? "#fff" : "#1890FF"} handleClick={() => { handleClick(0) }} />
+        <Square value={squares[1]} color={line.indexOf(1) === -1 ? "#fff" : "#1890FF"} handleClick={() => { handleClick(1) }} />
+        <Square value={squares[2]} color={line.indexOf(2) === -1 ? "#fff" : "#1890FF"} handleClick={() => { handleClick(2) }} />
       </div>
       <div className="board-row">
-        <Square value={squares[3]} handleClick={() => { handleClick(3) }} />
-        <Square value={squares[4]} handleClick={() => { handleClick(4) }} />
-        <Square value={squares[5]} handleClick={() => { handleClick(5) }} />
+        <Square value={squares[3]} color={line.indexOf(3) === -1 ? "#fff" : "#1890FF"} handleClick={() => { handleClick(3) }} />
+        <Square value={squares[4]} color={line.indexOf(4) === -1 ? "#fff" : "#1890FF"} handleClick={() => { handleClick(4) }} />
+        <Square value={squares[5]} color={line.indexOf(5) === -1 ? "#fff" : "#1890FF"} handleClick={() => { handleClick(5) }} />
       </div>
       <div className="board-row">
-        <Square value={squares[6]} handleClick={() => { handleClick(6) }} />
-        <Square value={squares[7]} handleClick={() => { handleClick(7) }} />
-        <Square value={squares[8]} handleClick={() => { handleClick(8) }} />
+        <Square value={squares[6]} color={line.indexOf(6) === -1 ? "#fff" : "#1890FF"} handleClick={() => { handleClick(6) }} />
+        <Square value={squares[7]} color={line.indexOf(7) === -1 ? "#fff" : "#1890FF"} handleClick={() => { handleClick(7) }} />
+        <Square value={squares[8]} color={line.indexOf(8) === -1 ? "#fff" : "#1890FF"} handleClick={() => { handleClick(8) }} />
       </div>
     </>
   );
