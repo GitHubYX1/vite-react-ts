@@ -10,15 +10,12 @@ function Board({ board, colorLine, onplay }: { board: string[][], colorLine: num
     }
     onplay(row, column);
   };
-  const backgroundColor = (rowIndex: number, squareIndex: number) => {
-    let className = "";
-    if (colorLine.length) {
-      const line = colorLine.filter((line: number[]) => line[0] === rowIndex && line[1] === squareIndex);
-      if (line.length) {
-        className = "active";
-      }
+  //判断颜色
+  const checkColorClass = (rowIndex: number, squareIndex: number) => {
+    if (colorLine.some((line: number[]) => line[0] === rowIndex && line[1] === squareIndex)) {
+      return "active";
     }
-    return className;
+    return "";
   }
   return (
     <>
@@ -27,7 +24,7 @@ function Board({ board, colorLine, onplay }: { board: string[][], colorLine: num
           <div className="board-row" key={rowIndex}>
             {row.map((square, squareIndex) => {
               return (
-                <Square key={squareIndex} value={square} className={backgroundColor(rowIndex, squareIndex)} onClick={() => { handleClick(rowIndex, squareIndex) }}></Square>
+                <Square key={squareIndex} value={square} className={checkColorClass(rowIndex, squareIndex)} onClick={() => { handleClick(rowIndex, squareIndex) }}></Square>
               );
             })}
           </div>
@@ -45,18 +42,18 @@ function ChessBoard({ x, y, targetCount, children }: { x: number, y: number, tar
   const [player, setPlayer] = useState("X");
   const [currentMove, setCurrentMove] = useState(0); //当前操作数
   const [colorLine, setColor] = useState<number[][]>([]);
+  //点击棋盘
   const onplay = (row: number, column: number) => {
     const newBoard = [...board];
     newBoard[row][column] = player;
     setBoard(newBoard);
-    const line = winVictory(newBoard, row, column);
-    if (line.length) {
-      setColor(line);
+    const victoryLine = winVictory(newBoard, row, column);
+    if (victoryLine.length) {
+      setColor(victoryLine);
     } else {
       setPlayer(player === "X" ? "O" : "X");
       setCurrentMove(currentMove + 1);
     }
-
   }
   //计算胜利
   const winVictory = (newBoard: string[][], row: number, column: number) => {
@@ -97,14 +94,15 @@ function ChessBoard({ x, y, targetCount, children }: { x: number, y: number, tar
   }
   //结算
   const status = () => {
-    if (colorLine.length !== 0) {
+    if (colorLine.length > 0) {
       return "胜利玩家: " + player;
-    } else if (colorLine.length == 0 && currentMove == boardCount) {
+    } else if (colorLine.length === 0 && currentMove === boardCount) {
       return "平局";
     }
     return "下个玩家: " + player;
   };
-  const resetting = () => {
+  //重置
+  const reset = () => {
     setBoard(initialMatrix);
     setPlayer("X");
     setColor([]);
@@ -112,7 +110,7 @@ function ChessBoard({ x, y, targetCount, children }: { x: number, y: number, tar
   };
   return (
     <div className="chess-board">
-      <Button type="primary" onClick={resetting} >重置</Button>
+      <Button type="primary" onClick={reset} >重置</Button>
       {children}
       <div className="game-board">
         <div className="status">{status()}</div>
