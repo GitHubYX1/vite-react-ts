@@ -1,33 +1,38 @@
 .game {
-    display: flex;
-    flex-direction: row;
-    padding: 60px;
-    justify-content: center;
+    padding: 30px;
 }
 .status {
     margin-bottom: 10px;
 }
 
-.board-row:after {
-    clear: both;
-    content: '';
-    display: table;
+.game-board{
+    margin: 10px 0;
+    text-align: center;
+}
+
+.board-row{
+    display: flex;
+    justify-content: center;
 }
 
 .square {
     background: #fff;
     border: 1px solid #999;
     float: left;
-    font-size: 30px;
+    font-size: 26px;
     font-weight: bold;
-    line-height: 50px;
-    height: 50px;
+    line-height: 40px;
+    height: 40px;
     margin-right: -1px;
     margin-top: -1px;
     padding: 0;
     text-align: center;
-    width: 50px;
+    width: 40px;
     cursor: pointer;
+}
+
+.active{
+    background: #1890FF;
 }
 
 .game-info{
@@ -35,4 +40,53 @@
 }
 .game-info li{
     margin-bottom: 5px;
+}
+
+/* 首页样式 */
+.game-select{
+    width: 200px;
+    text-align: center;
+    font-size: 18px;
+    margin: 0 auto;
+}
+.game-select button{
+    display: block;
+    margin-bottom: 10px;
+}
+
+/* 标题样式 */
+.game-title{
+    text-align: center;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+/* 标准棋盘样式 */
+.standard-board{
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+}
+
+/* 自定义棋盘样式 */
+.custom-board{
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.custom-set{
+    width: 200px;
+    margin: 0 auto;
+}
+
+.custom-input{
+    text-align: left;
+    margin-bottom: 10px;
+}
+
+.custom-input span{
+    display: block;
+    margin-bottom: 2px;
 }
