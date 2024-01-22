@@ -5,7 +5,7 @@ import Square from "./square";
 function Board({ board, colorLine, onplay }: { board: string[][], colorLine: number[][], onplay: (row: number, column: number) => void }) {
   //点击事件
   const handleClick = (row: number, column: number) => {
-    if (board[row][column] !== "" || colorLine.length != 0) {
+    if (board[row][column] !== "" || colorLine.length !== 0) {
       return;
     }
     onplay(row, column);
