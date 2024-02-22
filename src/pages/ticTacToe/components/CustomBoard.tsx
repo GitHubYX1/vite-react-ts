@@ -47,16 +47,18 @@ function ChessBoard({ x, y, targetCount, children }: { x: number, y: number, tar
     const newBoard = [...board];
     newBoard[row][column] = player;
     setBoard(newBoard);
-    const victoryLine = winVictory(newBoard, row, column);
+    // 计算并设置胜利线
+    const victoryLine = calculateVictory(newBoard, row, column);
     if (victoryLine.length) {
       setColor(victoryLine);
     } else {
+       // 切换玩家，并增加操作步数
       setPlayer(player === "X" ? "O" : "X");
       setCurrentMove(currentMove + 1);
     }
   }
   //计算胜利
-  const winVictory = (newBoard: string[][], row: number, column: number) => {
+  const calculateVictory = (newBoard: string[][], row: number, column: number) => {
     let count = 1;// 用于统计连续相同玩家的个数
     const directions = [
       // 水平方向
@@ -92,8 +94,8 @@ function ChessBoard({ x, y, targetCount, children }: { x: number, y: number, tar
     }
     return [];
   }
-  //结算
-  const status = () => {
+  //获取游戏状态
+  const getStatus  = () => {
     if (colorLine.length > 0) {
       return "胜利玩家: " + player;
     } else if (colorLine.length === 0 && currentMove === boardCount) {
@@ -101,8 +103,8 @@ function ChessBoard({ x, y, targetCount, children }: { x: number, y: number, tar
     }
     return "下个玩家: " + player;
   };
-  //重置
-  const reset = () => {
+  //游戏重置
+  const resetGame  = () => {
     setBoard(initialMatrix);
     setPlayer("X");
     setColor([]);
@@ -110,10 +112,10 @@ function ChessBoard({ x, y, targetCount, children }: { x: number, y: number, tar
   };
   return (
     <div className="chess-board">
-      <Button type="primary" onClick={reset} >重置</Button>
+      <Button type="primary" onClick={resetGame } >重置</Button>
       {children}
       <div className="game-board">
-        <div className="status">{status()}</div>
+        <div className="status">{getStatus ()}</div>
         <Board board={board} colorLine={colorLine} onplay={onplay}></Board>
       </div>
     </div>
