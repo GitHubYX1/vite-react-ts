@@ -5,7 +5,7 @@ export const headerLinks = [
     link: "/home",
   },
   {
-    title: "搜索文字",
+    title: "文字搜索",
     link: "/text",
   },
   {

@@ -24,7 +24,7 @@ export default memo(function Text() {
   };
   return (
     <TextSearch>
-      <h2>文本搜索</h2>
+      <h2>文字搜索</h2>
       <div className="search-input">
         <Input
           ref={(elem) => {
