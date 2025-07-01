@@ -1,16 +1,17 @@
 .game {
     padding: 30px;
 }
+
 .status {
     margin-bottom: 10px;
 }
 
-.game-board{
+.game-board {
     margin: 10px 0;
     text-align: center;
 }
 
-.board-row{
+.board-row {
     display: flex;
     justify-content: center;
 }
@@ -31,62 +32,73 @@
     cursor: pointer;
 }
 
-.active{
+.active {
     background: #1890FF;
 }
 
-.game-info{
+.game-info {
     text-align: center;
 }
-.game-info li{
+
+.game-info li {
     margin-bottom: 5px;
 }
 
 /* 首页样式 */
-.game-select{
+.game-select {
     width: 200px;
     text-align: center;
     font-size: 18px;
     margin: 0 auto;
 }
-.game-select button{
+
+.game-select button {
     display: block;
     margin-bottom: 10px;
 }
 
 /* 标题样式 */
-.game-title{
+.game-title {
     text-align: center;
     font-size: 18px;
     margin-bottom: 10px;
 }
 
 /* 标准棋盘样式 */
-.standard-board{
+.standard-board {
     margin: 0 auto;
     display: flex;
     justify-content: center;
 }
 
 /* 自定义棋盘样式 */
-.custom-board{
+.custom-board {
     text-align: center;
     display: flex;
     flex-direction: row;
     justify-content: center;
 }
 
-.custom-set{
+.custom-set {
     width: 200px;
     margin: 0 auto;
 }
 
-.custom-input{
+.custom-input {
     text-align: left;
     margin-bottom: 10px;
 }
 
-.custom-input span{
+.custom-input span {
     display: block;
     margin-bottom: 2px;
+}
+
+.custom-switch {
+    text-align: left;
+    margin-bottom: 10px;
+}
+
+.custom-switch span { 
+    margin-right: 10px;
 }
