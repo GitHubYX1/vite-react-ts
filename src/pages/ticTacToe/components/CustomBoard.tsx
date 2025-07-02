@@ -75,7 +75,7 @@ const calculateVictory = (newBoard: string[][], row: number, column: number, y: 
     ],
   ];
   let line: [number, number][] = [[row, column]];
-  let maxLine:  [number, number][] = []
+  let maxLine: [number, number][] = [];
   let maxCount = 0;
   const connection = (r: number, c: number, j: number) => {
     let m = row + r,
@@ -111,25 +111,21 @@ const calculateVictory = (newBoard: string[][], row: number, column: number, y: 
 const findBestMove = (newBoard: string[][], x: number, y: number, targetCount: number) => {
   // 基础检查
   if (!newBoard || !newBoard.length) return [-1, -1];
-  
   // 1. 进攻策略：查找必胜位置（局部优先）
-  const attackRange = Math.min(5, Math.max(x, y));
   for (let row = 0; row < y; row++) {
     for (let col = 0; col < x; col++) {
       if (newBoard[row][col] === "") {
         newBoard[row][col] = "O";
         const victoryLine = calculateVictory(newBoard, row, col, x, y, targetCount, "O");
         newBoard[row][col] = "";
-        
-        if (victoryLine.length >= targetCount) {
+        if (victoryLine.length >= targetCount - 1) {
           return [row, col]; // 发现必胜点
         }
       }
     }
   }
-  
   // 2. 防守策略：评估并阻止对手威胁
-  const threatPositions: {row: number, col: number, score: number}[] = [];
+  const threatPositions: { row: number; col: number; score: number }[] = [];
   for (let row = 0; row < y; row++) {
     for (let col = 0; col < x; col++) {
       if (newBoard[row][col] === "") {
@@ -137,48 +133,54 @@ const findBestMove = (newBoard: string[][], x: number, y: number, targetCount: n
         const victoryLine = calculateVictory(newBoard, row, col, x, y, targetCount, "X");
         if (victoryLine.length >= targetCount - 1) {
           // 记录高威胁位置
-          threatPositions.push({row, col, score: victoryLine.length});
+          threatPositions.push({ row, col, score: victoryLine.length });
         }
         newBoard[row][col] = "";
       }
     }
   }
-  
+
   // 如果发现威胁位置，优先防守
   if (threatPositions.length > 0) {
     threatPositions.sort((a, b) => b.score - a.score);
     return [threatPositions[0].row, threatPositions[0].col];
   }
-  
+
   // 3. 占优策略：大棋盘适应性优化
   const centerRow = Math.floor(y / 2);
   const centerCol = Math.floor(x / 2);
-  
+
   // 优先中心区域3x3
-  for (let r = Math.max(0, centerRow-1); r <= Math.min(y-1, centerRow+1); r++) {
-    for (let c = Math.max(0, centerCol-1); c <= Math.min(x-1, centerCol+1); c++) {
+  for (let r = Math.max(0, centerRow - 1); r <= Math.min(y - 1, centerRow + 1); r++) {
+    for (let c = Math.max(0, centerCol - 1); c <= Math.min(x - 1, centerCol + 1); c++) {
       if (newBoard[r][c] === "") {
         return [r, c];
       }
     }
   }
-  
   // 次优选择：边中点
   const edgeMidPoints: [number, number][] = [
-    [0, Math.floor(x/2)], [Math.floor(y/2), 0], 
-    [Math.floor(y/2), x-1], [y-1, Math.floor(x/2)]
+    [0, Math.floor(x / 2)],
+    [Math.floor(y / 2), 0],
+    [Math.floor(y / 2), x - 1],
+    [y - 1, Math.floor(x / 2)],
   ];
-  
+
   for (const [row, col] of edgeMidPoints) {
     if (newBoard[row][col] === "") {
       return [row, col];
     }
   }
-  
   // 4. 高级策略：模式识别与权重评估
-  const positionScores = Array(y).fill(0).map(() => Array(x).fill(0));
-  const directions = [[0,1],[1,0],[1,1],[1,-1]];
-  
+  const positionScores = Array(y)
+    .fill(0)
+    .map(() => Array(x).fill(0));
+  const directions = [
+    [0, 1],
+    [1, 0],
+    [1, 1],
+    [1, -1],
+  ];
   // 评估每个空位的潜在价值
   for (let row = 0; row < y; row++) {
     for (let col = 0; col < x; col++) {
@@ -187,48 +189,39 @@ const findBestMove = (newBoard: string[][], x: number, y: number, targetCount: n
         let adjacentScore = 0;
         for (let dr = -1; dr <= 1; dr++) {
           for (let dc = -1; dc <= 1; dc++) {
-            if (row+dr >=0 && col+dc >=0 && row+dr < y && col+dc < x &&
-                newBoard[row+dr][col+dc] === "O") {
+            if (row + dr >= 0 && col + dc >= 0 && row + dr < y && col + dc < x && newBoard[row + dr][col + dc] === "O") {
               adjacentScore += 1;
             }
           }
         }
-        
         // 检查潜在连线机会
         let linePotential = 0;
         for (const [dx, dy] of directions) {
           let count = 0;
           // 正方向
-          for (let i=1; i<targetCount; i++) {
-            if (row + dx*i >=0 && row + dx*i < y && 
-                col + dy*i >=0 && col + dy*i < x && 
-                newBoard[row + dx*i][col + dy*i] === "O") {
+          for (let i = 1; i < targetCount; i++) {
+            if (row + dx * i >= 0 && row + dx * i < y && col + dy * i >= 0 && col + dy * i < x && newBoard[row + dx * i][col + dy * i] === "O") {
               count++;
             } else break;
           }
           // 反方向
-          for (let i=1; i<targetCount; i++) {
-            if (row - dx*i >=0 && row - dx*i < y && 
-                col - dy*i >=0 && col - dy*i < x && 
-                newBoard[row - dx*i][col - dy*i] === "O") {
+          for (let i = 1; i < targetCount; i++) {
+            if (row - dx * i >= 0 && row - dx * i < y && col - dy * i >= 0 && col - dy * i < x && newBoard[row - dx * i][col - dy * i] === "O") {
               count++;
             } else break;
           }
-          
           linePotential += count;
         }
-        
         positionScores[row][col] = adjacentScore * 2 + linePotential;
       }
     }
   }
-  
   // 5. 随机策略：基于评分选择
-  const availableMoves: {row: number, col: number, score: number}[] = [];
+  const availableMoves: { row: number; col: number; score: number }[] = [];
   for (let row = 0; row < y; row++) {
     for (let col = 0; col < x; col++) {
       if (newBoard[row][col] === "") {
-        availableMoves.push({row, col, score: positionScores[row][col]});
+        availableMoves.push({ row, col, score: positionScores[row][col] });
       }
     }
   }
@@ -240,8 +233,7 @@ const findBestMove = (newBoard: string[][], x: number, y: number, targetCount: n
     // 筛选所有同分最优解
     const bestMoves = availableMoves.filter(m => m.score === bestScore);
     // 随机选择一个，增加变化性
-    return [bestMoves[Math.floor(Math.random() * bestMoves.length)].row, 
-            bestMoves[0].col];
+    return [bestMoves[Math.floor(Math.random() * bestMoves.length)].row, bestMoves[0].col];
   }
   // 最终兜底方案
   return [-1, -1];
