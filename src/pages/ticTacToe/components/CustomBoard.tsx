@@ -52,21 +52,21 @@ const calculateVictory = (newBoard: string[][], row: number, column: number, y: 
   let count = 1; // 用于统计连续相同玩家的个数
   const directions = [
     // 水平方向
-    { r: 0, c: -1 },
-    { r: 0, c: 1 },
+    { r: 0, c: -1, j: 1 },
+    { r: 0, c: 1, j: 0 },
     // 垂直方向
-    { r: -1, c: 0 },
-    { r: 1, c: 0 },
+    { r: -1, c: 0, j: 1 },
+    { r: 1, c: 0, j: 0 },
     // 左斜方向
-    { r: -1, c: -1 },
-    { r: 1, c: 1 },
+    { r: -1, c: -1, j: 1 },
+    { r: 1, c: 1, j: 0 },
     // 右斜方向
-    { r: -1, c: 1 },
-    { r: 1, c: -1 },
+    { r: -1, c: 1, j: 1 },
+    { r: 1, c: -1, j: 0 },
   ];
   const line: [number, number][] = [[row, column]];
   // 遍历所有方向
-  for (const { r, c } of directions) {
+  for (const { r, c, j } of directions) {
     let m = row + r,
       n = column + c;
     // 按当前方向进行连线
@@ -76,11 +76,13 @@ const calculateVictory = (newBoard: string[][], row: number, column: number, y: 
       m += r;
       n += c;
     }
-    if (count === targetCount) {
-      return line;
-    } else {
-      count = 1;
-      line.length = 1; // 重置连线数组，保留起始坐标
+    if (j === 0) {
+      if (count === targetCount) {
+        return line;
+      } else {
+        count = 1;
+        line.length = 1; // 重置连线数组，保留起始坐标
+      }
     }
   }
   return [];
