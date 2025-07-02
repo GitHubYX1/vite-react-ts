@@ -72,7 +72,8 @@ const calculateVictory = (newBoard: string[][], row: number, column: number, y: 
     // 按当前方向进行连线
     while (m >= 0 && m < y && n >= 0 && n < x && newBoard[m][n] === currentPlayer) {
       count++;
-      line.push([m, n]);
+      if (j === 1) line.unshift([m, n]);
+      else line.push([m, n]);
       m += r;
       n += c;
     }
