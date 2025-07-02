@@ -5,6 +5,8 @@ import Square from "./square";
 interface BoardType {
   board: string[][];
   colorLine: number[][];
+  player: string;
+  isRobotEnabled: boolean;
   onplay: (row: number, column: number) => void;
 }
 interface ChessBoardType {
@@ -17,13 +19,13 @@ interface ChessBoardType {
 }
 
 // 生成棋盘
-function Board({ board, colorLine, onplay }: BoardType) {
+function Board({ board, colorLine, player, isRobotEnabled, onplay }: BoardType) {
   //点击事件
   const handleClick = (row: number, column: number) => {
     if (board[row][column] !== "" || colorLine.length !== 0) {
       return;
     }
-    onplay(row, column);
+    if (!isRobotEnabled || player !== "O") onplay(row, column);
   };
   //判断颜色
   const checkColorClass = (rowIndex: number, squareIndex: number) => {
@@ -215,7 +217,7 @@ function ChessBoard({ x, y, targetCount, isRobotEnabled, isRobotFirst, children 
       {children}
       <div className="game-board">
         <div className="status">{getStatus()}</div>
-        <Board board={board} colorLine={colorLine} onplay={onplay}></Board>
+        <Board board={board} colorLine={colorLine} player={player} isRobotEnabled={isRobotEnabled} onplay={onplay}></Board>
       </div>
     </div>
   );
