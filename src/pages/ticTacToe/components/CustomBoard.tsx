@@ -54,21 +54,36 @@ const calculateVictory = (newBoard: string[][], row: number, column: number, y: 
   let count = 1; // 用于统计连续相同玩家的个数
   const directions = [
     // 水平方向
-    { r: 0, c: -1, j: 1 },
-    { r: 0, c: 1, j: 0 },
+    [
+      { r: 0, c: -1 },
+      { r: 0, c: 1 },
+    ],
     // 垂直方向
-    { r: -1, c: 0, j: 1 },
-    { r: 1, c: 0, j: 0 },
+    [
+      { r: -1, c: 0 },
+      { r: 1, c: 0 },
+    ],
     // 左斜方向
-    { r: -1, c: -1, j: 1 },
-    { r: 1, c: 1, j: 0 },
+    [
+      { r: -1, c: -1 },
+      { r: 1, c: 1 },
+    ],
     // 右斜方向
-    { r: -1, c: 1, j: 1 },
-    { r: 1, c: -1, j: 0 },
+    [
+      { r: -1, c: 1 },
+      { r: 1, c: -1 },
+    ],
   ];
-  const line: [number, number][] = [[row, column]];
-  // 遍历所有方向
-  for (const { r, c, j } of directions) {
+  let line: [number, number][] = [[row, column]];
+  let maxLine: {
+    line: [number, number][];
+    dir: {
+      r: number;
+      c: number;
+    }[];
+  } = { line: [], dir: [] };
+  let maxCount = 0;
+  const connection = (r: number, c: number, j: number) => {
     let m = row + r,
       n = column + c;
     // 按当前方向进行连线
@@ -79,16 +94,24 @@ const calculateVictory = (newBoard: string[][], row: number, column: number, y: 
       m += r;
       n += c;
     }
-    if (j === 0) {
-      if (count === targetCount) {
-        return line;
-      } else {
-        count = 1;
-        line.length = 1; // 重置连线数组，保留起始坐标
+  };
+  // 遍历所有方向
+  for (const [a, b] of directions) {
+    connection(a.r, a.c, 1);
+    connection(b.r, b.c, 0);
+    if (count >= targetCount) {
+      return { line, dir: [a, b] };
+    } else {
+      if (count > maxCount) {
+        maxCount = count;
+        maxLine = { line, dir: [a, b] };
       }
+      count = 1;
+      line = [[row, column]];
     }
   }
-  return [];
+
+  return maxLine;
 };
 
 // 查找最佳落子位置
@@ -97,31 +120,25 @@ const findBestMove = (newBoard: string[][], x: number, y: number, targetCount: n
   if (!newBoard || !newBoard.length) {
     return [-1, -1];
   }
-  // 进攻策略：检查是否有一步能直接获胜的位置
-  for (let row = 0; row < y; row++) {
+  // 攻防策略
+    for (let row = 0; row < y; row++) {
     for (let col = 0; col < x; col++) {
-      if (newBoard[row][col] === "") {
-        newBoard[row][col] = "O";
-        const victoryLine = calculateVictory(newBoard, row, col, x, y, targetCount, "O");
-        if (victoryLine.length >= targetCount) {
-          newBoard[row][col] = "";
-          return [row, col];
+      if (newBoard[row][col] !== "") {
+        const victoryLine = calculateVictory(newBoard, row, col, x, y, targetCount, newBoard[row][col]);
+        if (victoryLine.line.length >= Math.round(targetCount/2)) {
+          const head = victoryLine.line[0];
+          head[0] = head[0] + victoryLine.dir[0].r;
+          head[1] = head[1] + victoryLine.dir[0].c;
+          if(head[1] >= 0 && head[1] < y && head[0] >= 0 && head[0] < x &&newBoard[head[0]][head[1]] === ""){
+            return [head[0], head[1]];
+          }
+          const tail = victoryLine.line[victoryLine.line.length - 1];
+          tail[0] = tail[0] + victoryLine.dir[1].r;
+          tail[1] = tail[1] + victoryLine.dir[1].c;
+          if(tail[1] >= 0 && tail[1] < y && tail[0] >= 0 && tail[0] < x &&newBoard[tail[0]][tail[1]] === ""){
+            return [tail[0], tail[1]];
+          }
         }
-        newBoard[row][col] = "";
-      }
-    }
-  }
-  // 防守策略：检查对手是否有一步能获胜的位置并进行阻止
-  for (let row = 0; row < y; row++) {
-    for (let col = 0; col < x; col++) {
-      if (newBoard[row][col] === "") {
-        newBoard[row][col] = "X";
-        const victoryLine = calculateVictory(newBoard, row, col, x, y, targetCount, "X");
-        if (victoryLine.length >= targetCount) {
-          newBoard[row][col] = "";
-          return [row, col];
-        }
-        newBoard[row][col] = "";
       }
     }
   }
@@ -132,7 +149,6 @@ const findBestMove = (newBoard: string[][], x: number, y: number, targetCount: n
   if (newBoard[centerRow][centerCol] === "") {
     return [centerRow, centerCol];
   }
-
   const corners: [number, number][] = [
     [0, 0],
     [0, x - 1],
@@ -172,8 +188,8 @@ function ChessBoard({ x, y, targetCount, isRobotEnabled, isRobotFirst, children 
     setBoard(newBoard);
     // 计算并设置胜利线
     const victoryLine = calculateVictory(newBoard, row, column, x, y, targetCount, player);
-    if (victoryLine.length) {
-      setColor(victoryLine);
+    if (victoryLine.line.length >= targetCount) {
+      setColor(victoryLine.line);
     } else {
       // 切换玩家，并增加操作步数
       setPlayer(player === "X" ? "O" : "X");
