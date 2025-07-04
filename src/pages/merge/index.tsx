@@ -3,6 +3,10 @@ import { Button, message } from "antd";
 import { read, utils, writeFile } from "xlsx";
 import { MergeContainer } from "./mergeCss";
 
+interface excelSheetType {
+  [prop: string]: string;
+}
+
 //合并
 export default function Merge() {
   const [loading, setLoading] = useState(false);
@@ -19,7 +23,7 @@ export default function Merge() {
       for (let i = 0; i < file.length; i++) {
         const item = file[i];
         const name = item.name.split("2024")[0];
-        const data: any = await excelFile(item);
+        const data = await excelFile(item);
         if (i === 0) {
           titleList.push("医院名称");
           for (const key in data[0]) {
@@ -41,7 +45,7 @@ export default function Merge() {
     setProgress(`问卷合并完成！`);
   };
   const excelFile = async (file: File) => {
-    return await new Promise((resolve, reject) => {
+    return await new Promise<excelSheetType[]>((resolve, reject) => {
       const reader = new FileReader();
       reader.readAsArrayBuffer(file);
       reader.onload = function (ev) {
@@ -49,8 +53,7 @@ export default function Merge() {
           const dataBinary = ev?.target?.result;
           const workbook = read(dataBinary, { type: "binary" });
           const firstWorkSheet = workbook.Sheets[workbook.SheetNames[0]];
-          const data = utils.sheet_to_json<any>(firstWorkSheet);
-          console.log("data", data);
+          const data = utils.sheet_to_json<excelSheetType>(firstWorkSheet);
           resolve(data);
         } catch (error) {
           setLoading(false);
