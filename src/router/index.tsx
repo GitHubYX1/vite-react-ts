@@ -37,6 +37,10 @@ const routes = [
     path: "/ticTacToe",
     component: lazy(() => import("../pages/ticTacToe")),
   },
+  {
+    path: "/Merge",
+    component: lazy(() => import("../pages/merge")),
+  },
 ];
 
 export default routes;

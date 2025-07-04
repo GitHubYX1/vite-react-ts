@@ -28,7 +28,7 @@
     "react-router-dom": "^5.0.0",
     "shortid": "^2.2.16",
     "styled-components": "^5.3.3",
-    "xlsx": "^0.17.0"
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@types/react": "^17.0.33",

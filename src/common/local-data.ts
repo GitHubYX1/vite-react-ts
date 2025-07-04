@@ -28,6 +28,10 @@ export const headerLinks = [
     title: "井字棋",
     link: "/ticTacToe",
   },
+  {
+    title: "excel合并",
+    link: "/merge",
+  },
 ];
 
 export const educationList = [
