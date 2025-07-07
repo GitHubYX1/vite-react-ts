@@ -14,7 +14,6 @@ export default function Merge() {
   const fileInput = useRef<HTMLInputElement>(null);
   const importFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files;
-    console.log("file", file);
     setLoading(true);
     setProgress("开始合并问卷...");
     const titleList = [];
@@ -43,6 +42,7 @@ export default function Merge() {
     exportExcel([titleList, ...dataList], "合并问卷");
     setLoading(false);
     setProgress(`问卷合并完成！`);
+    fileInput.current && (fileInput.current.value = "");
   };
   const excelFile = async (file: File) => {
     return await new Promise<excelSheetType[]>((resolve, reject) => {
@@ -53,12 +53,16 @@ export default function Merge() {
           const dataBinary = ev?.target?.result;
           const workbook = read(dataBinary, { type: "binary" });
           const firstWorkSheet = workbook.Sheets[workbook.SheetNames[0]];
-          const data = utils.sheet_to_json<excelSheetType>(firstWorkSheet);
+          const data = utils.sheet_to_json<excelSheetType>(firstWorkSheet, {
+            defval: "",
+            blankrows: true, // 在输出中包含空白行
+          });
           resolve(data);
         } catch (error) {
           setLoading(false);
           message.error(error);
           setProgress("合并失败！");
+          fileInput.current && (fileInput.current.value = "");
           reject(error);
         }
       };
